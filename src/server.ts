@@ -1,5 +1,8 @@
-function x(a: number, b: number) {
-  return a + b;
-}
+import app from "./app";
 
-console.log(x(5, 6));
+const port = 3000;
+
+app.listen(port, () => {
+  console.log();
+  console.log(`Server running on port ${port}`);
+});
