@@ -1,10 +1,16 @@
+import "reflect-metadata";
+import dotenv from "dotenv";
 import express from "express";
-import homeRoutes from "./routes/homeRoutes";
+import { useExpressServer } from "routing-controllers";
+dotenv.config();
 
 class App {
-  constructor(public app = express()) {
+  public app: express.Application;
+
+  constructor() {
+    this.app = express();
     this.middlewares();
-    this.routes();
+    this.setupControllers();
   }
 
   middlewares() {
@@ -12,8 +18,10 @@ class App {
     this.app.use(express.json());
   }
 
-  routes() {
-    this.app.use("/", homeRoutes);
+  setupControllers() {
+    useExpressServer(this.app, {
+      controllers: [__dirname + "/controllers/*.{ts,js}"],
+    });
   }
 }
 

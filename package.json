@@ -14,18 +14,26 @@
   "license": "ISC",
   "devDependencies": {
     "@eslint/js": "^9.18.0",
+    "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/node": "^22.10.7",
     "eslint": "^9.18.0",
     "globals": "^15.14.0",
     "nodemon": "^3.1.9",
     "prettier": "3.4.2",
+    "prisma": "^6.3.0",
     "sucrase": "^3.35.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.21.0"
   },
   "dependencies": {
-    "express": "^4.21.2"
+    "@prisma/client": "^6.3.0",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "reflect-metadata": "^0.2.2",
+    "routing-controllers": "^0.10.4"
   }
 }

@@ -1,9 +1,11 @@
-import { Request, Response } from "express";
+import { JsonController, Get } from "routing-controllers";
 
-class HomeController {
-  Index(req: Request, res: Response) {
-    res.status(200).json({ tudoCerto: true });
+@JsonController("/")
+export default class HomeController {
+  @Get("/")
+  getAll() {
+    return {
+      message: "Hello World",
+    };
   }
 }
-
-export default new HomeController();
