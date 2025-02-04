@@ -1,8 +1,6 @@
 import "reflect-metadata";
-import dotenv from "dotenv";
 import express from "express";
 import { useExpressServer } from "routing-controllers";
-dotenv.config();
 
 class App {
   public app: express.Application;

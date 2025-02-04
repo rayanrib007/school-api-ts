@@ -8,7 +8,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model student {
+model students {
   id        Int      @id @default(autoincrement())
   name      String   @db.VarChar(255)
   surname   String   @db.VarChar(255)
@@ -18,4 +18,13 @@ model student {
   height    Float
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model users {
+  id            Int      @id @default(autoincrement())
+  name          String   @db.VarChar(255)
+  email         String   @db.VarChar(255) @unique
+  password_hash String   @db.VarChar(255)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
