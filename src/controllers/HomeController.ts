@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { JsonController, Get } from "routing-controllers";
-import PrivatePrismaController from "../privateControllers/PrivateController";
+import PrivatePrismaController from "../privateControllers/PrivatePrismaController";
 
 @JsonController("/")
 export default class HomeController {

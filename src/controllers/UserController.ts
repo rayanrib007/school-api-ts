@@ -1,29 +1,31 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { JsonController, Post } from "routing-controllers";
-import PrivatePrismaController from "../privateControllers/PrivateController";
+import { JsonController, Post, Res, Body } from "routing-controllers";
+import { Response } from "express";
 import bcryptjs from "bcryptjs";
+import { ICreateUserProtocol } from "../interfaces/users/IUsers";
+import PrivateUserController from "../privateControllers/PrivateUserControllers";
 
 @JsonController("/users")
 export default class UserController {
   @Post("/create")
-  async store() {
+  async store(@Body() body: ICreateUserProtocol, @Res() res: Response) {
     try {
-      const user = await PrivatePrismaController.prisma.users.create({
-        data: {
-          name: "michely silva",
-          email: "michely@hotmail.com",
-          password_hash: bcryptjs.hashSync("123456", 8),
-        },
+      const user = await PrivateUserController.store({
+        name: body.name,
+        email: body.email,
+        password_hash: bcryptjs.hashSync(body.password_hash, 8),
       });
-      return {
+
+      return res.status(201).json({
         message: "Usuário criado com sucesso!",
+        type: "success",
         data: user,
-      };
-    } catch (error: any) {
-      return {
+      });
+    } catch {
+      return res.status(500).json({
         message: "Erro ao criar Usuário!",
-        error: error.message,
-      };
+        type: "error",
+        data: "",
+      });
     }
   }
 }
