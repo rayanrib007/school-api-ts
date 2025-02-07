@@ -1,5 +1,11 @@
 export interface ICreateUserProtocol {
   name: string;
   email: string;
-  password_hash: string;
+  password: string;
+}
+
+export interface IUptateUserProtocol {
+  name: string;
+  email: string;
+  password: string;
 }
