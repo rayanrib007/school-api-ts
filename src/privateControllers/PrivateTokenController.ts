@@ -1,7 +1,7 @@
 import { HttpError } from "routing-controllers";
 import PrivatePrismaController from "../privateControllers/PrivatePrismaController";
 import { ICreateUserTokenProtocol } from "../interfaces/tokens/IToken";
-import { sign } from "jsonwebtoken";
+import Jwt from "jsonwebtoken";
 import bcryptjs from "bcryptjs";
 
 export class PrivateTokenController {
@@ -22,10 +22,10 @@ export class PrivateTokenController {
       throw new HttpError(400, "Senha inválida");
     }
 
-    const token = sign(
+    const token = Jwt.sign(
       { id: user.id, email: user.email },
       process.env.TOKEN_SECRET as string,
-      { expiresIn: "7d" },
+      { expiresIn: `${Number(process.env.TOKEN_EXPIRATION)}d` },
     );
 
     return { token };
