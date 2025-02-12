@@ -1,7 +1,4 @@
-import {
-  ICreateUserProtocol,
-  IUptateUserProtocol,
-} from "../interfaces/users/IUsers";
+import { ICreateUserProtocol, IUptateUserProtocol } from "../interfaces/IUsers";
 import { HttpError } from "routing-controllers";
 import PrivatePrismaController from "../privateControllers/PrivatePrismaController";
 import bcryptjs from "bcryptjs";

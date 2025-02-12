@@ -1,6 +1,6 @@
 import { HttpError } from "routing-controllers";
 import PrivatePrismaController from "../privateControllers/PrivatePrismaController";
-import { ICreateUserTokenProtocol } from "../interfaces/tokens/IToken";
+import { ICreateUserTokenProtocol } from "../interfaces/IToken";
 import Jwt from "jsonwebtoken";
 import bcryptjs from "bcryptjs";
 

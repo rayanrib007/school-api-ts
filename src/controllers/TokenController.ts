@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Body, JsonController, Post, Res } from "routing-controllers";
-import { ICreateUserTokenProtocol } from "../interfaces/tokens/IToken";
+import { ICreateUserTokenProtocol } from "../interfaces/IToken";
 import PrivateTokenController from "../privateControllers/PrivateTokenController";
 import { Response } from "express";
 

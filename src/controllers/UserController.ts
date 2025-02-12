@@ -10,13 +10,13 @@ import {
   Param,
   Put,
   Delete,
+  UseBefore,
 } from "routing-controllers";
 import { Response, Request } from "express";
-import {
-  ICreateUserProtocol,
-  IUptateUserProtocol,
-} from "../interfaces/users/IUsers";
+import { ICreateUserProtocol, IUptateUserProtocol } from "../interfaces/IUsers";
 import PrivateUserController from "../privateControllers/PrivateUserControllers";
+import { MiddlewareLoginRequired } from "../middlewares/MiddlewareLoginRequired";
+import { IRequestAuthenticateRequestProtocol } from "../interfaces/IUsers";
 
 @JsonController("/users")
 export default class UserController {
@@ -40,7 +40,11 @@ export default class UserController {
   }
 
   @Get("/all")
-  async getUsers(@Res() res: Response) {
+  @UseBefore(MiddlewareLoginRequired)
+  async getUsers(
+    @Req() req: IRequestAuthenticateRequestProtocol,
+    @Res() res: Response,
+  ) {
     try {
       const users = await PrivateUserController.index();
 
