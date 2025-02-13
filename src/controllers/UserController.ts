@@ -62,6 +62,7 @@ export default class UserController {
   }
 
   @Get(`/:id`)
+  @UseBefore(MiddlewareLoginRequired)
   async getOneUser(@Param("id") id: string, @Res() res: Response) {
     try {
       const user = await PrivateUserController.show(Number(id));
@@ -79,14 +80,15 @@ export default class UserController {
     }
   }
 
-  @Put(`/update/:id`)
+  @Put(`/update`)
+  @UseBefore(MiddlewareLoginRequired)
   async updateUser(
-    @Param("id") id: string,
     @Body() body: IUptateUserProtocol,
     @Res() res: Response,
+    @Req() req: IRequestAuthenticateRequestProtocol,
   ) {
     try {
-      const user = await PrivateUserController.update(Number(id), body);
+      const user = await PrivateUserController.update(req.user.userId, body);
 
       return res.status(201).json({
         type: "success",
@@ -101,10 +103,14 @@ export default class UserController {
     }
   }
 
-  @Delete(`/delete/:id`)
-  async deleteUser(@Param("id") id: string, @Res() res: Response) {
+  @Delete(`/delete`)
+  @UseBefore(MiddlewareLoginRequired)
+  async deleteUser(
+    @Req() req: IRequestAuthenticateRequestProtocol,
+    @Res() res: Response,
+  ) {
     try {
-      const user = await PrivateUserController.delete(Number(id));
+      const user = await PrivateUserController.delete(req.user.userId);
 
       return res.status(201).json({
         type: "success",

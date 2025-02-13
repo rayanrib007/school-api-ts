@@ -10,12 +10,21 @@ class PrivateUserController {
       email: body.email,
       password_hash: bcryptjs.hashSync(body.password, 8),
     };
-    const user = await PrivatePrismaController.prisma.users.create({ data });
+    const user = await PrivatePrismaController.prisma.users.create({
+      data,
+      select: { id: true, name: true, email: true },
+    });
     return user;
   }
 
   async index() {
-    const users = PrivatePrismaController.prisma.users.findMany();
+    const users = PrivatePrismaController.prisma.users.findMany({
+      select: {
+        id: true,
+        name: true,
+        email: true,
+      },
+    });
     return users;
   }
 
@@ -24,13 +33,18 @@ class PrivateUserController {
       where: {
         id,
       },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+      },
     });
     return user;
   }
 
   async update(id: number, body: IUptateUserProtocol) {
     if (!id || !body.name || !body.email || !body.password) {
-      throw new Error("Dados inválidos ou faltando");
+      throw new HttpError(400, "Dados inválidos ou faltando");
     }
     const user = await PrivatePrismaController.prisma.users.findUnique({
       where: {
@@ -41,7 +55,8 @@ class PrivateUserController {
       throw new HttpError(400, "Usuário nao encontrado");
     }
     const data = {
-      ...body,
+      name: body.name,
+      email: body.email,
       password_hash: bcryptjs.hashSync(body.password, 8),
     };
     const userUpdated = await PrivatePrismaController.prisma.users.update({
@@ -49,7 +64,13 @@ class PrivateUserController {
         id,
       },
       data,
+      select: {
+        id: true,
+        name: true,
+        email: true,
+      },
     });
+
     return userUpdated;
   }
 
@@ -65,6 +86,11 @@ class PrivateUserController {
     const userDeleted = await PrivatePrismaController.prisma.users.delete({
       where: {
         id,
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
       },
     });
     return userDeleted;

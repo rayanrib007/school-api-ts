@@ -2,7 +2,7 @@ import { Request } from "express";
 
 export interface IRequestAuthenticateRequestProtocol extends Request {
   user: {
-    userId: string;
+    userId: number;
     userEmail: string;
   };
 }

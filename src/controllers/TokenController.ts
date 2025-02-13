@@ -5,7 +5,7 @@ import PrivateTokenController from "../privateControllers/PrivateTokenController
 import { Response } from "express";
 
 @JsonController("/tokens")
-export default class HomeController {
+export default class TokenController {
   @Post("/create")
   async store(@Body() body: ICreateUserTokenProtocol, @Res() res: Response) {
     try {

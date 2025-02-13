@@ -4,6 +4,7 @@ import { ExpressMiddlewareInterface } from "routing-controllers";
 import { HttpError } from "routing-controllers";
 import Jwt from "jsonwebtoken";
 import { IRequestAuthenticateRequestProtocol } from "../interfaces/IUsers";
+import PrivatePrismaController from "../privateControllers/PrivatePrismaController";
 
 export class MiddlewareLoginRequired implements ExpressMiddlewareInterface {
   async use(
@@ -22,17 +23,26 @@ export class MiddlewareLoginRequired implements ExpressMiddlewareInterface {
       const data = Jwt.verify(token, process.env.TOKEN_SECRET as string);
       const { id, email } = data as Jwt.JwtPayload;
 
+      const user = await PrivatePrismaController.prisma.users.findUnique({
+        where: {
+          id,
+          email,
+        },
+      });
+
+      if (!user) {
+        throw new HttpError(401, "Sessão expirada ou token inválido");
+      }
+
       req.user = {
-        userId: id,
+        userId: Number(id),
         userEmail: email,
       };
 
       next();
     } catch (error: any) {
-      return res.status(error.httpCode ? error.httpCode : 401).json({
-        message: error.httpCode
-          ? error.message
-          : "Sessão expirada ou token inválido",
+      return res.status(error.httpCode ? error.httpCode : 500).json({
+        message: error.httpCode ? error.message : "Falha interna no servidor",
         type: "error",
         data: null,
       });
