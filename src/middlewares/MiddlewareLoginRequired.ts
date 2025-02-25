@@ -16,7 +16,7 @@ export class MiddlewareLoginRequired implements ExpressMiddlewareInterface {
       const { authorization } = req.headers;
 
       if (!authorization) {
-        throw new HttpError(401, "Requer login");
+        throw new HttpError(401, "R.L.");
       }
 
       const token = authorization.split(" ")[1];

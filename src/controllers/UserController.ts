@@ -12,7 +12,7 @@ import {
   Delete,
   UseBefore,
 } from "routing-controllers";
-import { Response, Request } from "express";
+import { Response } from "express";
 import { ICreateUserProtocol, IUptateUserProtocol } from "../interfaces/IUsers";
 import PrivateUserController from "../privateControllers/PrivateUserControllers";
 import { MiddlewareLoginRequired } from "../middlewares/MiddlewareLoginRequired";
@@ -21,6 +21,7 @@ import { IRequestAuthenticateRequestProtocol } from "../interfaces/IUsers";
 @JsonController("/users")
 export default class UserController {
   @Post("/create")
+  @UseBefore(MiddlewareLoginRequired)
   async store(@Body() body: ICreateUserProtocol, @Res() res: Response) {
     try {
       const user = await PrivateUserController.store(body);

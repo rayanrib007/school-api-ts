@@ -5,7 +5,31 @@ import StudentValidate from "../utils/validations/StudentValidate";
 
 class PrivateStudentController {
   async index() {
-    const students = PrivatePrismaController.prisma.students.findMany();
+    const students = await PrivatePrismaController.prisma.students.findMany({
+      select: {
+        id: true,
+        name: true,
+        surname: true,
+        email: true,
+        age: true,
+        weight: true,
+        height: true,
+        photos: {
+          select: {
+            id: true,
+            original_name: true,
+            file_name: true,
+            student_id: true,
+          },
+          orderBy: {
+            id: "desc",
+          },
+        },
+      },
+      orderBy: {
+        id: "desc",
+      },
+    });
     return students;
   }
 
@@ -16,6 +40,26 @@ class PrivateStudentController {
     const student = await PrivatePrismaController.prisma.students.findUnique({
       where: {
         id,
+      },
+      select: {
+        id: true,
+        name: true,
+        surname: true,
+        email: true,
+        age: true,
+        weight: true,
+        height: true,
+        photos: {
+          select: {
+            id: true,
+            original_name: true,
+            file_name: true,
+            student_id: true,
+          },
+          orderBy: {
+            id: "desc",
+          },
+        },
       },
     });
 
