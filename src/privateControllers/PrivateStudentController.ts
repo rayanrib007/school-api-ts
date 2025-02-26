@@ -20,6 +20,7 @@ class PrivateStudentController {
             original_name: true,
             file_name: true,
             student_id: true,
+            url: true,
           },
           orderBy: {
             id: "desc",
@@ -55,6 +56,7 @@ class PrivateStudentController {
             original_name: true,
             file_name: true,
             student_id: true,
+            url: true,
           },
           orderBy: {
             id: "desc",

@@ -1,6 +1,7 @@
 import "reflect-metadata";
 import express from "express";
 import { useExpressServer } from "routing-controllers";
+import { resolve } from "path";
 
 class App {
   public app: express.Application;
@@ -14,6 +15,7 @@ class App {
   middlewares() {
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(express.json());
+    this.app.use(express.static(resolve(__dirname, "..", "uploads")));
   }
 
   setupControllers() {

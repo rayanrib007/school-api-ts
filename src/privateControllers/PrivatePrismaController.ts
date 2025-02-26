@@ -1,7 +1,16 @@
 import { PrismaClient } from "@prisma/client";
 
-class PrivatePrismaController {
-  public prisma = new PrismaClient();
+export default class PrivatePrismaController {
+  static prisma = new PrismaClient().$extends({
+    result: {
+      photos: {
+        url: {
+          needs: { file_name: true },
+          compute(photo) {
+            return `${process.env.API_URL}/images/${photo.file_name}`;
+          },
+        },
+      },
+    },
+  });
 }
-
-export default new PrivatePrismaController();
