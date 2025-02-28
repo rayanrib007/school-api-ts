@@ -21,7 +21,6 @@ import { IRequestAuthenticateRequestProtocol } from "../interfaces/IUsers";
 @JsonController("/users")
 export default class UserController {
   @Post("/create")
-  @UseBefore(MiddlewareLoginRequired)
   async store(@Body() body: ICreateUserProtocol, @Res() res: Response) {
     try {
       const user = await PrivateUserController.store(body);
